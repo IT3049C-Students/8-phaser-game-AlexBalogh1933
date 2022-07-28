@@ -16,12 +16,15 @@ var config = {
         update: update
     }
 };
+
 var game = new Phaser.Game(config);
 var map;
 var player;
 var cursors;
 var groundLayer, coinLayer;
 var text;
+var score = 0;
+
 function preload() {
     // map made with Tiled in JSON format
     this.load.tilemapTiledJSON('map', 'assets/map.json');
@@ -82,10 +85,18 @@ function create() {
     this.cameras.main.startFollow(player);
     // set background color, so the sky is not black    
     this.cameras.main.setBackgroundColor('#ccccff');
+
+    text = this.add.text(20, 570, '0', {
+        fontSize: '20px',
+        fill: '#ffffff'
+    });
+    text.setScrollFactor(0);
 }
 
 function collectCoin(sprite, tile) {
     coinLayer.removeTileAt(tile.x, tile.y); // remove the tile/coin
+    score ++; // increment the score
+    text.setText(score); // set the text to show the current score
     return false;
 }
 
