@@ -33,6 +33,18 @@ function preload() {
     this.load.atlas('player', 'assets/player.png', 'assets/player.json');
 }
 function create() {
+    // load the map 
+    map = this.make.tilemap({key: 'map'});
+    
+    // tiles for the ground layer
+    var groundTiles = map.addTilesetImage('tiles');
+    // create the ground layer
+    groundLayer = map.createDynamicLayer('World', groundTiles, 0, 0);
+    // the player will collide with this layer
+    groundLayer.setCollisionByExclusion([-1]);
+    // set the boundaries of our game world
+    this.physics.world.bounds.width = groundLayer.width;
+    this.physics.world.bounds.height = groundLayer.height;
 }
 function update() {
 }
